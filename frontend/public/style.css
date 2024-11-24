@@ -10,7 +10,7 @@ body {
 
 /* Navbar */
 .navbar {
-  background-color: #ffffff;
+  background-color: #fcf7f7;
   border-bottom: 1px solid #ddd;
   position: sticky;
   top: 0;
@@ -71,7 +71,7 @@ body {
 .main-content {
   text-align: center;
   padding: 2rem 1rem;
-  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+  background: linear-gradient(90deg, #ff4000 0%, #0056b3 100%);
   color: #fff;
   height: calc(100vh - 64px);
   display: flex;
