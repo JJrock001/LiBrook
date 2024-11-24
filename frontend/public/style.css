@@ -1,149 +1,182 @@
-@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
-
+/* General Styles */
 body {
-  font-family: "Mitr", sans-serif;
-}
-
-#app-name {
-  font-size: 2em;
-  font-weight: bold;
   margin: 0;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f8f9fa;
+  color: #333;
+  overflow-x: hidden;
 }
 
-section {
-  margin: 20px 0;
+/* Navbar */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.section-title {
-  font-size: 1.2em;
-  font-weight: lighter;
-  margin: 0;
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.section-subtitle {
-  font-size: 0.8em;
-  font-weight: lighter;
-  line-height: 80%;
-}
-
-#member-list {
-  margin: 0;
-  font-size: 0.8em;
-}
-
-#member-list div {
+/* Logo */
+.logo {
   display: flex;
   align-items: center;
-  margin: 4px 0px;
-  column-gap: 4px;
+  animation: fadeIn 1s ease-in-out;
 }
 
-#main-table {
-  padding: 0;
-  width: 100%;
-  background: #eee;
-  border-radius: 8px;
-  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
-  border-collapse: collapse;
-  overflow: hidden;
+.logo-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5rem;
 }
 
-#main-table > thead {
-  background: #555;
-  color: white;
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }
 
-#main-table > thead > tr > th {
-  font-weight: lighter;
-  text-align: left;
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 1rem;
 }
 
-#main-table td,
-#main-table th {
-  padding: 5px 10px;
-  font-weight: lighter;
+.nav-item {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
 }
 
-#main-table input,
-#main-table select,
-#filter-name,
-#lower-price,
-#upper-price,
-#member-name-to-add {
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid #aaa;
+.nav-item:hover {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Main Content */
+.main-content {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 1.5s ease-in-out;
+}
 
-#main-table button,
-#add-member,
-#member-list button {
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
+.intro h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  animation: slideIn 1s ease-in-out;
+}
+
+.intro p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateX(-30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+      flex-direction: column;
+      position: absolute;
+      top: 64px;
+      right: 0;
+      background: #fff;
+      width: 200px;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+  }
+
+  .nav-links.active {
+      display: flex;
+  }
+
+  .container {
+      justify-content: space-between;
+  }
+
+  .main-content {
+      padding: 1rem;
+  }
+
+  .intro h1 {
+      font-size: 2rem;
+  }
+
+  .intro p {
+      font-size: 1rem;
+  }
+}
+
+/* Mobile Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
   cursor: pointer;
 }
 
-#main-table button:hover,
-#add-member:hover,
-#member-list button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
 }
 
-#filter-button {
-  color: black;
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
-  cursor: pointer;
-}
-
-#filter-button:hover {
-  color: white;
-  animation: filtering 10s infinite linear;
-}
-
-@keyframes filtering {
-  0% {
-    background: #ff0000;
-  }
-
-  12.5% {
-    background: #ffa500;
-  }
-
-  25% {
-    background: #ffff00;
-  }
-
-  37.5% {
-    background: #008000;
-  }
-
-  50% {
-    background: #0000ff;
-  }
-
-  62.5% {
-    background: #4b0082;
-  }
-
-  75% {
-    background: purple;
-  }
-
-  87.5% {
-    background: #ee82ee;
-  }
-
-  100% {
-    background: #ff0000;
+@media (max-width: 768px) {
+  .hamburger {
+      display: flex;
   }
 }
