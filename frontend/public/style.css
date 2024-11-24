@@ -60,7 +60,7 @@ body {
 }
 
 .nav-item:hover {
-  background-color: #007bff;
+  background-color: #882828;
   color: #fff;
   border-radius: 5px;
   transform: translateY(-2px);
@@ -71,7 +71,7 @@ body {
 .main-content {
   text-align: center;
   padding: 2rem 1rem;
-  background: linear-gradient(90deg, #ff4000 0%, #0056b3 100%);
+  background: linear-gradient(90deg, #ff4000 0%, #882828 100%);
   color: #fff;
   height: calc(100vh - 64px);
   display: flex;
