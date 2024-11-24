@@ -10,7 +10,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #333;
+    background-color: #882828;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -29,15 +29,15 @@ body {
 
 .back-btn {
     text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
+    color: #0c0606;
+    background-color: #fefeff;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .back-btn:hover {
-    background-color: #0056b3;
+    background-color: #c1c68b;
     transform: scale(1.05);
 }
 
@@ -67,6 +67,22 @@ body {
     transform: scale(1.1);
 }
 
+/* คำอธิบายใต้ภาพ */
+figcaption {
+    padding: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    background-color: #f1f1f1;
+    border-top: 2px solid #ddd;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.gallery-item:hover figcaption {
+    background-color: #a01212;
+    color: white;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -81,15 +97,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .back-btn {
-        margin-top: 0.5rem;
-    }
-
     .gallery {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
