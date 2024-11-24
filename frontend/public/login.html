@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative;
         }
         .login-container {
             background: #ffffff;
@@ -64,9 +65,26 @@
         .login-container a:hover {
             text-decoration: underline;
         }
+        
+        /* Back to Main Page button in top-left */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <!-- Back to Main Page button -->
+    <a href="index.html" class="back-button">← Back to Main Page</a>
+
     <div class="login-container">
         <h1>Login</h1>
         <form action="/login" method="POST">
@@ -83,3 +101,4 @@
     </div>
 </body>
 </html>
+``
