@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,24 +15,24 @@
             align-items: center;
             height: 100vh;
         }
-        .forgot-password-container {
+        .reset-password-container {
             background: #ffffff;
             padding: 20px 30px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
-        .forgot-password-container h1 {
+        .reset-password-container h1 {
             text-align: center;
             font-size: 24px;
             margin-bottom: 20px;
         }
-        .forgot-password-container label {
+        .reset-password-container label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        .forgot-password-container input {
+        .reset-password-container input {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -40,7 +40,7 @@
             border-radius: 4px;
             font-size: 14px;
         }
-        .forgot-password-container button {
+        .reset-password-container button {
             width: 100%;
             padding: 10px;
             background-color: #007bff;
@@ -50,10 +50,10 @@
             font-size: 16px;
             cursor: pointer;
         }
-        .forgot-password-container button:hover {
+        .reset-password-container button:hover {
             background-color: #0056b3;
         }
-        .forgot-password-container a {
+        .reset-password-container a {
             display: block;
             text-align: center;
             margin-top: 10px;
@@ -61,34 +61,27 @@
             color: #007bff;
             text-decoration: none;
         }
-        .forgot-password-container a:hover {
+        .reset-password-container a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="forgot-password-container">
-        <h1>Forgot Password</h1>
-        <form id="forgotPasswordForm">
-            <label for="email">Enter your email address</label>
+    <div class="reset-password-container">
+        <h1>Reset Password</h1>
+        <form action="/verify-code" method="POST">
+            <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            <button type="button" onclick="redirectToReset()">Send Verification Code</button>
+            
+            <label for="code">Verification Code</label>
+            <input type="text" id="code" name="code" placeholder="Enter the code sent to your email" required>
+            
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password" required>
+            
+            <button type="submit">Reset Password</button>
         </form>
         <a href="login.html">Back to Login</a>
     </div>
-
-    <script>
-        function redirectToReset() {
-            const email = document.getElementById('email').value;
-
-            if (email) {
-                // Ideally, here you'd send the verification code to the server.
-                // For now, we simply redirect to reset.html.
-                window.location.href = "reset.html";
-            } else {
-                alert("Please enter a valid email address.");
-            }
-        }
-    </script>
 </body>
 </html>
