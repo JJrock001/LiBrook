@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Reservation</title>
+    <link rel="stylesheet" href="styleofreserve.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="logo">Librook</div>
+        <a href="#" class="back-btn">Back</a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="gallery">
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 1"></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 2"></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 3"></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 4"></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 5"></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/300x200" alt="Library 6"></div>
+    </main>
+</body>
+</html>
