@@ -5,44 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chulaengineering Library</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Background styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('./pic/librarybackground.jpg') no-repeat center center/cover;
+            color: #fff; /* Adjust text color for contrast */
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 100px 20px;
+            background: rgba(0, 0, 0, 0.5); /* Add a translucent overlay for readability */
+            border-radius: 10px;
+            margin: 100px auto;
+            max-width: 800px;
+        }
+
+        h1, p {
+            margin: 10px 0;
+        }
+    </style>
     <script>
-      function toggleMenu() {
-          const navLinks = document.querySelector('.nav-links');
-          navLinks.classList.toggle('active');
-      }
-  </script>
-  
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
 </head>
 <body>
     <!-- Header Section -->
     <header class="navbar">
-      <div class="container">
-          <!-- Logo -->
-          <div class="logo">
-              <img src="https://via.placeholder.com/50" alt="Library Logo" class="logo-img">
-              <span class="logo-text">Chulaengineering Library</span>
-          </div>
-          <!-- Hamburger Menu (Mobile) -->
-          <div class="hamburger" onclick="toggleMenu()">
-              <div></div>
-              <div></div>
-              <div></div>
-          </div>
-          <!-- Navigation -->
-          <nav class="nav-links">
-              <a href="#" class="nav-item">Home</a>
-              <a href="#" class="nav-item">Log In</a>
-              <a href="#" class="nav-item">Sign Up</a>
-              <a href="#" class="nav-item">Reservation</a>
-          </nav>
-      </div>
-  </header>
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="https://via.placeholder.com/50" alt="Library Logo" class="logo-img">
+                <span class="logo-text">Chulaengineering Library</span>
+            </div>
+            <!-- Hamburger Menu (Mobile) -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <!-- Navigation -->
+            <nav class="nav-links">
+                <a href="#" class="nav-item">Home</a>
+                <a href="#" class="nav-item">Log In</a>
+                <a href="#" class="nav-item">Sign Up</a>
+                <a href="#" class="nav-item">Reservation</a>
+            </nav>
+        </div>
+    </header>
   
-
     <!-- Main Content -->
     <main class="main-content">
         <div class="intro">
-            <h1>Welcome to Chulaengineering Library</h1>
+            <h1>Welcome to ChulaEngineering Library</h1>
             <p>Explore a world of knowledge, engineering resources, and academic inspiration.</p>
         </div>
     </main>
