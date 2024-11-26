@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Reservation</title>
     <link rel="stylesheet" href="styleofreserve.css">
+    <style>
+        /* Remove underline from all links */
+        a {
+            text-decoration: none;
+        }
+
+        /* Optionally, remove text decoration from figcaption if it's inside an anchor */
+        figcaption {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Header Section -->
@@ -12,24 +23,36 @@
         <div class="logo">Librook</div>
         <a href="index.html" class="back-btn">Back</a>
     </header>
-
+    
     <!-- Main Content -->
     <main class="gallery">
-        <div class="gallery-item"><img src="pic/room1.jpg" alt="Library 1">
-            <figcaption>Library Room 1: A quiet space for some rest</figcaption>
-        </div>
-        <div class="gallery-item"><img src="pic/room2.jpg" alt="Library 2">
-            <figcaption>Library Room 2: A place for teamwork</figcaption>
-        </div>
-        <div class="gallery-item"><img src="pic/room3.jpg" alt="Library 3">
-            <figcaption>Library Room 3: A place for learning</figcaption>
+        <!-- Image 1 - Link with type=1 -->
+        <div class="gallery-item">
+            <a href="inside.html?type=1">
+                <img src="pic/room1.jpg" alt="Library 1">
+                <figcaption>Library Room 1: A quiet space for some rest</figcaption>
+            </a>
         </div>
         
+        <!-- Image 2 - Link with type=2 -->
+        <div class="gallery-item">
+            <a href="inside.html?type=2">
+                <img src="pic/room2.jpg" alt="Library 2">
+                <figcaption>Library Room 2: A place for teamwork</figcaption>
+            </a>
+        </div>
+        
+        <!-- Image 3 - Link with type=3 -->
+        <div class="gallery-item">
+            <a href="inside.html?type=3">
+                <img src="pic/room3.jpg" alt="Library 3">
+                <figcaption>Library Room 3: A place for learning</figcaption>
+            </a>
+        </div>
     </main>
     
     <footer class="footer-text">
         <p>You can reserve the room by clicking the pictures</p>
     </footer>
-    
 </body>
 </html>
