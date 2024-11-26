@@ -1,35 +1,36 @@
 import Room from "../models/roomModel.js";
 
-export const createItem = async (req, res) => {
+const getRooms = async (req, res) => {
   try {
-    const newItem = new Item(req.body);
-    await newItem.save();
-
-    res.status(200).json({ message: "OK" });
-  } catch (err) {
-    if (err.name === "ValidationError") {
-      res.status(400).json({ error: "Bad Request" });
-    } else {
-      res.status(500).json({ error: "Internal server error." });
-    }
+    const rooms = await Room.find();
+    res.status(200).json(rooms);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const getItems = async (req, res) => {
-  const items = await Item.find();
+const bookRoom = async (req, res) => {
+  const { roomId, index } = req.body;
 
-  res.status(200).json(items);
+  try {
+    const room = await Room.findById(roomId);
+
+    if (!room) {
+      return res.status(404).json({ message: "Room not found" });
+    }
+
+    if (!room.room_avl[index]) {
+      return res.status(400).json({ message: "Selected room time slot is unavailable" });
+    }
+
+    // Mark the time slot as booked
+    room.room_avl[index] = false;
+    await room.save();
+
+    res.status(200).json({ message: "Room booked successfully", room });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const deleteItem = async (req, res) => {
-  // TODO2: implement this function
-  // HINT: you can serve the internet and find what method to use for deleting item.
-  res.status(501).send("Unimplemented");
-};
-
-export const filterItems = async (req, res) => {
-  // TODO3: implement this filter function
-  // WARNING: you are not allowed to query all items and do something to filter it afterward.
-  // Otherwise, you will be punished by -0.5 scores for this part
-  res.status(501).send("Unimplemented");
-};
+export { getRooms, bookRoom };
