@@ -44,6 +44,8 @@
     gap: 20px;
     padding: 20px;
     background-color: #ecf0f1;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
 }
 
 .gallery-item {
@@ -52,6 +54,9 @@
     border: 2px solid #bdc3c7;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out forwards;
+    animation-delay: calc(var(--index, 0) * 0.2s);
 }
 
 .gallery-item img {
@@ -91,3 +96,21 @@ figcaption {
 .footer-text p {
     margin: 0;
 }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }}
