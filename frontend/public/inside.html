@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inside the Library Room</title>
+</head>
+<body>
+    <header>
+        <h1>Room Details</h1>
+    </header>
+
+    <main>
+        <div id="room-details">
+            <p>Loading room details...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>End of Room Details</p>
+    </footer>
+
+    <script>
+        // Get the URL parameter "type"
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get("type");  // Get the type value from the URL query string
+
+        // Display the value of type in the room details section
+        const roomDetails = document.getElementById("room-details");
+
+        // Show the type value in the div
+        roomDetails.innerHTML = `<h2>The selected room type is: ${type}</h2>`;
+    </script>
+</body>
+</html>
