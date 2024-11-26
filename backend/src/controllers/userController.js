@@ -1,9 +1,10 @@
-import Room from "../models/roomModel.js";
 
-export const createRoom = async (req, res) => {
+import User from "../models/userModel";
+
+export const createUser = async (req, res) => {
   try {
-    const newRoom = new Room(req.body);
-    await newRoom.save();
+    const newUser = new User(req.body);
+    await newUser.save();
 
     res.status(200).json({ message: "OK" });
   } catch (err) {
@@ -15,21 +16,20 @@ export const createRoom = async (req, res) => {
   }
 };
 
-export const getRooms = async (req, res) => {
-  const rooms = await Room.find();
+export const getUsers = async (req, res) => {
+  const users = await User.find();
 
-  res.status(200).json(rooms);
+  res.status(200).json(users);
 };
 
-export const deleteRoom = async (req, res) => {
+export const deleteUser = async (req, res) => {
   const { id } = req.params; // Get the item ID from the request parameters
-  const index = rooms.findIndex(room => room._id === parseInt(id)); // Find the index of the item
+  const index = users.findIndex(user => user._id === parseInt(id)); // Find the index of the item
 
   if (index !== -1) {
-    rooms.splice(index, 1); // Remove the item from the array
+    users.splice(index, 1); // Remove the item from the array
     res.status(200).json({ message: "Item deleted successfully" }); // Success response
   } else {
     res.status(404).json({ error: "Item not found" }); // Error if the item is not found
   }
 };
-
