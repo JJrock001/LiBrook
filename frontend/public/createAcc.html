@@ -63,9 +63,60 @@
         a:hover {
             text-decoration: underline;
         }
+      /* Back Button Styling */
+.back-btn {
+    position: fixed; /* Stays in place on scroll */
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1em;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+/* Hover Effect for Back Button */
+.back-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.1); /* Subtle zoom effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Back Button Icon (Optional) */
+.back-btn::before {
+    content: "◀"; /* Unicode for left arrow */
+    font-size: 1.2em;
+    color: white;
+}
+
+/* Responsive Adjustment for Small Screens */
+@media (max-width: 600px) {
+    .back-btn {
+        font-size: 0.9em;
+        padding: 8px 15px;
+        border-radius: 20px;
+        gap: 8px;
+    }
+
+    .back-btn::before {
+        font-size: 1em;
+    }
+}
+
     </style>
 </head>
 <body>
+    <a href="index.html" class="back-btn">
+        <span class="icon">◀</span> Back to Main Page
+    </a>
+    
     <div class="container">
         <h1>Create Account</h1>
         <form action="/create-account" method="POST">
