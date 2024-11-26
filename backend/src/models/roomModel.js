@@ -5,7 +5,7 @@ const roomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  room_id: {
+  room_type:{
     type: Number,
     required: true,
   },
