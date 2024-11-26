@@ -1,25 +1,49 @@
-import "dotenv/config";
-import "./config/db.js";
+import express from "express";
+import mongoose from "mongoose";
+import User from "./userModel.js"; // Import the User model
 
-import app from "./app.js";
+const app = express();
+const port = 3000;
 
-// This is for maintaining the server.
-process.on("uncaughtException", (err) => {
-  console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-  console.log(err.name, err.message);
-  console.log(err.stack);
-  process.exit(1);
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// POST endpoint for login
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find the user in the database
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Invalid username" });
+    }
+
+    // Compare the password (you may want to hash passwords in production)
+    if (user.password === password) {
+      // Mark the user as logged in (optional)
+      user.isLogin = true;
+      await user.save();
+
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(401).json({ success: false, message: "Invalid password" });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
 });
 
-process.on("unhandledRejection", (err) => {
-  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
-  console.log(`${err}`);
-  server.close(() => {
-    process.exit(1);
-  });
-});
-
-const PORT = 3222;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Backend Server ready at http://localhost:${PORT}`);
-});
+// Connect to MongoDB (adjust the connection string as needed)
+mongoose.connect("mongodb://localhost:27017/yourdb", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}`);
+    });
+  })
+  .catch((error) => console.error("Error connecting to MongoDB:", error));
