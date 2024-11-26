@@ -65,8 +65,6 @@
         .login-container a:hover {
             text-decoration: underline;
         }
-        
-        /* Back to Main Page button in top-left */
         .back-button {
             position: absolute;
             top: 20px;
@@ -79,6 +77,12 @@
         .back-button:hover {
             text-decoration: underline;
         }
+        #error-message {
+            text-align: center;
+            font-size: 14px;
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +91,7 @@
 
     <div class="login-container">
         <h1>Login</h1>
-        <form action="/login" method="POST">
+        <form onsubmit="event.preventDefault(); login();">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
             
@@ -96,9 +100,11 @@
             
             <button type="submit">Login</button>
         </form>
+        <p id="error-message" style="display: none;">Invalid username or password.</p>
         <a href="forgot.html">Forgot Password?</a>
         <a href="createAcc.html">Create an Account</a>
     </div>
+    <script src="scripts/main.js"></script>
+
 </body>
 </html>
-``

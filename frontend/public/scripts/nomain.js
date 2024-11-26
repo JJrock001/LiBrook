@@ -10,7 +10,6 @@ function login() {
   errorMessage.style.display = "none";
 
   if (username === USERNAME && password === PASSWORD) {
-    
     alert("Login successful!");
     window.location.href = "reservation.html";
   } else {
