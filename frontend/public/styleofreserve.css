@@ -15,6 +15,7 @@
     justify-content: space-between;
     align-items: center;
     position: sticky;
+    padding: 10px 20px;
     top: 0;
     z-index: 1000;
 }
@@ -24,16 +25,74 @@
     font-weight: bold;
 }
 
+/* Back Button */
 .back-btn {
     color: white;
     text-decoration: none;
     background-color: #e74c3c;
     padding: 10px 15px;
     border-radius: 5px;
+    margin-left: 15px;
     transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
+    background-color: #c0392b;
+}
+
+/* User Interface beside the Logo */
+.user-interface {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 15px;
+}
+
+/* Avatar Image */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+}
+
+/* Login Button */
+.login-btn {
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 15px;
+}
+
+.login-btn:hover {
+    background-color: #d35400;
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 15px;
+}
+
+.logout-btn:hover {
     background-color: #c0392b;
 }
 
@@ -93,9 +152,7 @@ figcaption {
     font-size: 1em;
 }
 
-.footer-text p {
-    margin: 0;
-}
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -113,12 +170,5 @@ figcaption {
     to {
         opacity: 1;
         transform: translateY(0);
-    }}
-
-    a {
-        text-decoration: none;  
     }
-    
-    figcaption {
-        text-decoration: none;  
-    }
+}

@@ -63,62 +63,64 @@
         a:hover {
             text-decoration: underline;
         }
-      /* Back Button Styling */
-.back-btn {
-    position: fixed; /* Stays in place on scroll */
-    top: 20px;
-    left: 20px;
-    text-decoration: none;
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 1em;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between icon and text */
-}
+        /* Back Button Styling */
+        .back-btn {
+            position: fixed; /* Stays in place on scroll */
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+        }
 
-/* Hover Effect for Back Button */
-.back-btn:hover {
-    background-color: #2980b9;
-    transform: scale(1.1); /* Subtle zoom effect */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
+        /* Hover Effect for Back Button */
+        .back-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.1); /* Subtle zoom effect */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
 
-/* Back Button Icon (Optional) */
-.back-btn::before {
-    content: "◀"; /* Unicode for left arrow */
-    font-size: 1.2em;
-    color: white;
-}
+        /* Back Button Icon (Optional) */
+        .back-btn::before {
+            content: "◀"; /* Unicode for left arrow */
+            font-size: 1.2em;
+            color: white;
+        }
 
-/* Responsive Adjustment for Small Screens */
-@media (max-width: 600px) {
-    .back-btn {
-        font-size: 0.9em;
-        padding: 8px 15px;
-        border-radius: 20px;
-        gap: 8px;
-    }
+        /* Responsive Adjustment for Small Screens */
+        @media (max-width: 600px) {
+            .back-btn {
+                font-size: 0.9em;
+                padding: 8px 15px;
+                border-radius: 20px;
+                gap: 8px;
+            }
 
-    .back-btn::before {
-        font-size: 1em;
-    }
-}
-
+            .back-btn::before {
+                font-size: 1em;
+            }
+        }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-btn">
         <span class="icon">◀</span> Back to Main Page
     </a>
-    
+
     <div class="container">
         <h1>Create Account</h1>
+        
+        <!-- Create Account Form -->
+        <form>
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter a username" required>
 
@@ -133,28 +135,38 @@
 
             <button type="submit">Create Account</button>
         </form>
+
         <a href="login.html">Already have an account? Login here</a>
     </div>
-    
+
     <script>
         document.querySelector("form").addEventListener("submit", async (event) => {
             event.preventDefault(); // Prevent traditional form submission
-    
+
+            // Input validation (check if passwords match)
+            if (document.getElementById("password").value !== document.getElementById("confirm-password").value) {
+                alert("Passwords do not match.");
+                return; // Stop form submission if passwords don't match
+            }
+
+            // Collect form data
             const data = {
                 username: document.getElementById("username").value,
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value,
                 confirm_password: document.getElementById("confirm-password").value,
             };
-    
-            const response = await fetch("http://54.85.236.167:3222/api/auth/create-account", {  // Ensure backend URL is correct
+
+            // Send the data to the backend API
+            const response = await fetch("http://54.85.236.167:3222/api/auth/create-account", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
-    
+
+            // Handle response from backend
             const result = await response.json();
             if (response.ok) {
                 alert("Account created successfully!");
@@ -164,6 +176,6 @@
             }
         });
     </script>
-    
+
 </body>
 </html>

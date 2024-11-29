@@ -5,44 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Reservation</title>
     <link rel="stylesheet" href="styleofreserve.css">
-    <style>
-        /* Remove underline from all links */
-        a {
-            text-decoration: none;
-        }
-
-        /* Optionally, remove text decoration from figcaption if it's inside an anchor */
-        figcaption {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <!-- Header Section -->
     <header class="navbar">
         <div class="logo">Librook</div>
+        <div id="user-interface" class="user-interface"></div>
         <a href="index.html" class="back-btn">Back</a>
     </header>
     
     <!-- Main Content -->
     <main class="gallery">
-        <!-- Image 1 - Link with type=1 -->
         <div class="gallery-item">
             <a href="inside.html?type=1">
                 <img src="pic/room1.jpg" alt="Library 1">
                 <figcaption>Library Room 1: A quiet space for some rest</figcaption>
             </a>
         </div>
-        
-        <!-- Image 2 - Link with type=2 -->
         <div class="gallery-item">
             <a href="inside.html?type=2">
                 <img src="pic/room2.jpg" alt="Library 2">
                 <figcaption>Library Room 2: A place for teamwork</figcaption>
             </a>
         </div>
-        
-        <!-- Image 3 - Link with type=3 -->
         <div class="gallery-item">
             <a href="inside.html?type=3">
                 <img src="pic/room3.jpg" alt="Library 3">
@@ -54,5 +39,45 @@
     <footer class="footer-text">
         <p>You can reserve the room by clicking the pictures</p>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const isLogin = sessionStorage.getItem("isLogin") === "true"; // Check login status
+    const name = sessionStorage.getItem("name") || "Guest"; // Fallback for name
+    const userInterface = document.getElementById("user-interface");
+
+    if (isLogin) {
+        // User is logged in: show avatar and logout button
+        userInterface.innerHTML = `
+            <img src="pic/male.avif" alt="User Avatar" class="user-avatar" title="${name}">
+            <button class="logout-btn">Logout</button>
+        `;
+
+        // Navigate to profile on avatar click
+        document.querySelector(".user-avatar").addEventListener("click", () => {
+            window.location.href = "profile.html"; // Redirect to profile page
+        });
+
+        // Handle logout functionality
+        document.querySelector(".logout-btn").addEventListener("click", () => {
+            sessionStorage.clear(); // Clear all session data
+            alert("You have been logged out!");
+            window.location.reload(); // Refresh to show login button
+        });
+    } else {
+        // User is not logged in: show "Login" button
+        userInterface.innerHTML = `
+            <button class="login-btn">Login</button>
+        `;
+
+        // Redirect to login page on click
+        document.querySelector(".login-btn").addEventListener("click", () => {
+            window.location.href = "login.html"; // Redirect to login page
+        });
+    }
+});
+
+    </script>
 </body>
 </html>
