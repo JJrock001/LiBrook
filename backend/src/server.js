@@ -1,27 +1,27 @@
-// backend/server.js
+// backend/src/server.js
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";  // Import dotenv to load .env file
 import authRoutes from "./routes/authRoutes.js"; // Import auth routes
 import reservationRoutes from "./routes/reservationRoutes.js"; // Import reservation routes
 
-dotenv.config(); // Load environment variables
+dotenv.config();  // Load environment variables from .env file
 
 const app = express();
-const port = process.env.PORT || 3222; // Use port 3222
+const port = process.env.PORT || 3222;
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:3221",  // Allow frontend on port 3221
+  origin: "http://54.85.236.167:3221",  // Allow frontend on port 3221
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
 app.use(express.json()); // Parse JSON body
 
 // Routes
-app.use("/api/auth", authRoutes);  // Auth routes for sign-up and login
-app.use("/api/reservation", reservationRoutes);  // Reservation routes
+app.use("/routes/authRoutes", authRoutes);  // Auth routes for sign-up and login
+app.use("/routes/reservationRoutes", reservationRoutes);  // Reservation routes
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
