@@ -1,49 +1,34 @@
+// backend/server.js
 import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
-import User from "./userModel.js"; // Import the User model
+import authRoutes from "./routes/authRoutes.js"; // Import auth routes
+import reservationRoutes from "./routes/reservationRoutes.js"; // Import reservation routes
+
+dotenv.config(); // Load environment variables
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3222; // Use port 3222
 
-// Middleware to parse JSON requests
-app.use(express.json());
+// Middleware
+app.use(cors({
+  origin: "http://localhost:3221",  // Allow frontend on port 3221
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+app.use(express.json()); // Parse JSON body
 
-// POST endpoint for login
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
+// Routes
+app.use("/api/auth", authRoutes);  // Auth routes for sign-up and login
+app.use("/api/reservation", reservationRoutes);  // Reservation routes
 
-  try {
-    // Find the user in the database
-    const user = await User.findOne({ username: username });
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-    if (!user) {
-      return res.status(401).json({ success: false, message: "Invalid username" });
-    }
-
-    // Compare the password (you may want to hash passwords in production)
-    if (user.password === password) {
-      // Mark the user as logged in (optional)
-      user.isLogin = true;
-      await user.save();
-
-      return res.status(200).json({ success: true });
-    } else {
-      return res.status(401).json({ success: false, message: "Invalid password" });
-    }
-  } catch (error) {
-    console.error("Error during login:", error);
-    return res.status(500).json({ success: false, message: "Server error" });
-  }
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on http://54.85.236.167:${port}`);
 });
-
-// Connect to MongoDB (adjust the connection string as needed)
-mongoose.connect("mongodb://localhost:27017/yourdb", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
-    });
-  })
-  .catch((error) => console.error("Error connecting to MongoDB:", error));
