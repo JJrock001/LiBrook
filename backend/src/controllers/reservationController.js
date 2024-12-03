@@ -1,27 +1,18 @@
-import Reservation from "../models/Reservation.js";
+// reservationController.js
+import Reservation from '../models/Reservation.js';
 
-// Create reservation
-export const createReservation = async (req, res) => {
-  const { userId, roomType, startTime, endTime } = req.body;
-
+const getReservations = async (req, res) => {
   try {
-    // Check if time slot is available (this could be expanded)
-    const existingReservation = await Reservation.findOne({ roomType, startTime, endTime });
-    if (existingReservation) {
-      return res.status(400).json({ message: "Room is already reserved for this time" });
+    const userId = req.params.userId;
+    const reservations = await Reservation.find({ user: userId });  // Assuming `user` is a reference in Reservation model
+    if (reservations.length === 0) {
+      return res.status(404).json({ message: 'No reservations found for this user.' });
     }
-
-    const reservation = new Reservation({
-      user: userId,
-      roomType,
-      startTime,
-      endTime,
-    });
-
-    await reservation.save();
-    res.status(201).json({ message: "Reservation made successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 };
+
+export default { getReservations };

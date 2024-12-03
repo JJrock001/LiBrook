@@ -135,7 +135,7 @@
 
   <div class="profile-section">
     <div class="profile-card">
-      <img src="pic/male.avif" alt="User Avatar">
+      <img src="pic/male.avif" alt="User Avatar" id="profile-img">
       <h2 id="userName">John Doe</h2>
       <p><strong>Email:</strong> <span id="userEmail">john.doe@example.com</span></p>
       <p><strong>Phone:</strong> <span id="userPhone">+123-456-7890</span></p>
@@ -144,7 +144,7 @@
 
     <div class="reservation-history">
       <h3>Reservation History</h3>
-      <table class="reservation-table">
+      <table class="reservation-table" id="reservationTable">
         <thead>
           <tr>
             <th>#</th>
@@ -154,45 +154,79 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>2024-01-15</td>
-            <td>New York City</td>
-            <td>Completed</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2024-02-20</td>
-            <td>Los Angeles</td>
-            <td>Cancelled</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>2024-03-05</td>
-            <td>Miami</td>
-            <td>Upcoming</td>
-          </tr>
+          <!-- Reservation data will be dynamically added here -->
         </tbody>
       </table>
     </div>
   </div>
 
   <script>
-    // Populate profile data from sessionStorage
-    document.addEventListener("DOMContentLoaded", () => {
-      const userName = sessionStorage.getItem("name") || "John Doe";
-      const userEmail = sessionStorage.getItem("email") || "john.doe@example.com";
+    document.addEventListener("DOMContentLoaded", async () => {
+  const userId = sessionStorage.getItem("userId"); // You can still use sessionStorage to store userId after login
 
-      document.getElementById("userName").textContent = userName;
-      document.getElementById("userEmail").textContent = userEmail;
-    });
+  if (userId) {
+    // Fetch user data from the backend
+    await getUserData(userId);
+    // Fetch and display reservation history
+    await getReservationHistory(userId);
+  } else {
+    alert("User not authenticated!");
+    window.location.href = "login.html";  // Redirect to login page if no userId found
+  }
+});
 
-    // Logout functionality
-    document.querySelector(".logout-btn").addEventListener("click", () => {
-      sessionStorage.clear(); // Clear all session data
-      alert("You have been logged out!");
-      window.location.href = "index.html"; // Redirect to login page
-    });
+async function getUserData(userId) {
+  try {
+    const response = await fetch(`http://54.85.236.167:3222/api/users/${userId}`);
+    if (response.ok) {
+      const user = await response.json();
+
+      // Update the profile section with the fetched data
+      document.getElementById("userName").textContent = user.name || "John Doe";
+      document.getElementById("userEmail").textContent = user.email || "john.doe@example.com";
+      document.getElementById("userPhone").textContent = user.phone || "+123-456-7890";
+      document.getElementById("userMemberSince").textContent = new Date(user.memberSince).toLocaleDateString() || "January 2022";
+      document.getElementById("profile-img").src = user.profileImage || "pic/male.avif"; // Default profile image if not found
+    } else {
+      alert("Failed to fetch user data.");
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    alert("An error occurred while fetching user data.");
+  }
+}
+
+async function getReservationHistory(userId) {
+  try {
+    const response = await fetch(`http://54.85.236.167:3222/api/users/${userId}/reservations`);
+    if (response.ok) {
+      const reservations = await response.json();
+      const reservationTableBody = document.getElementById("reservationTable").getElementsByTagName('tbody')[0];
+
+      reservations.forEach((reservation, index) => {
+        const row = reservationTableBody.insertRow();
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${new Date(reservation.reservationDate).toLocaleDateString()}</td>
+          <td>${reservation.location}</td>
+          <td>${reservation.status}</td>
+        `;
+      });
+    } else {
+      alert("Failed to fetch reservation history.");
+    }
+  } catch (error) {
+    console.error("Error fetching reservation history:", error);
+    alert("An error occurred while fetching reservation history.");
+  }
+}
+
+// Logout functionality
+document.querySelector(".logout-btn").addEventListener("click", () => {
+  sessionStorage.clear(); // Clear session data
+  alert("You have been logged out!");
+  window.location.href = "login.html"; // Redirect to login page
+});
   </script>
 </body>
 </html>
