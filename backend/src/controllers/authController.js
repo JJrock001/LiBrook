@@ -1,8 +1,12 @@
 // backend/src/controllers/authController.js
-
-import User from "../models/User.js";  // Assuming you have a User model
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
+dotenv.config();
+
+// Create Account Controller
 export const createAccount = async (req, res) => {
   const { username, email, password, confirm_password } = req.body;
 
@@ -27,57 +31,52 @@ export const createAccount = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "Account created successfully!" });
+    res.status(201).json({ message: "Account created successfully!", userId: newUser._id });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error, please try again" });
   }
 };
 
-// backend/src/controllers/authController.js
-
-// Login Route
-router.post("/login", async (req, res) => {
+// Login Controller
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required." });
+    return res.status(400).json({ message: "Email and password are required." });
   }
 
   try {
-      console.log("Looking for user with email:", email);
-      const user = await User.findOne({ email });
-      if (!user) {
-          console.log("User not found:", email);
-          return res.status(400).json({ message: "User not found" });
-      }
+    console.log("Looking for user with email:", email);
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("User not found:", email);
+      return res.status(400).json({ message: "User not found" });
+    }
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-          console.log("Invalid password for user:", email);
-          return res.status(400).json({ message: "Invalid password" });
-      }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log("Invalid password for user:", email);
+      return res.status(400).json({ message: "Invalid password" });
+    }
 
-      console.log("Password valid, generating JWT...");
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log("Password valid, generating JWT...");
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      console.log("Token generated:", token);
-
-      // Return token and user data
-      res.json({
-          token,
-          user: {
-              id: user._id,
-              name: user.username,  // Assuming 'username' is the name field in User model
-              email: user.email,
-              phone: user.phone,
-              //profileImage: user.profileImage,  // Add this if your user model has it
-              memberSince: user.createdAt,  // Assuming 'createdAt' is when the user joined
-          }
-      });
-
+    console.log("Token generated:", token);
+    res.json({ 
+        token, 
+        user: { 
+            id: user._id, 
+            username: user.username, 
+            email: user.email, 
+            phone: user.phone || "", 
+            profileImage: user.profileImage || "pic/male.avif", 
+            createdAt: user.createdAt 
+        } 
+    });
   } catch (err) {
-      console.error("Error during login:", err);
-      res.status(500).json({ message: "Something went wrong. Please try again later." });
+    console.error("Error during login:", err);
+    res.status(500).json({ message: "Something went wrong. Please try again later." });
   }
-});
+};

@@ -5,49 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chulaengineering Library</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Background styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: url('./pic/librarybackground.jpg') no-repeat center center/cover;
-            color: #fff; /* Adjust text color for contrast */
-        }
-    
-        .main-content {
-            display: flex;
-            justify-content: center; /* Horizontally centers the content */
-            align-items: center; /* Vertically centers the content */
-            height: 100vh;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.1); /* Add a translucent overlay */
-            border-radius: 10px;
-        }
-    
-        .intro {
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7); /* Darker background for better readability */
-            border-radius: 10px;
-            max-width: 800px;
-            width: 100%; /* Adjusts the width of the content */
-        }
-    
-        h1, p {
-            margin: 10px 0;
-        }
-    </style>
-    
     <script>
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
+
+        // Function to check if user is logged in
+        function isLoggedIn() {
+            const token = localStorage.getItem('token');
+            // Optionally, you can verify token validity here
+            return !!token;
+        }
+
+        // Function to update navigation based on login status
+        function updateNav() {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const signoutBtn = document.getElementById('signoutBtn');
+
+            if (isLoggedIn()) {
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                signoutBtn.style.display = 'block';
+            } else {
+                loginBtn.style.display = 'block';
+                signupBtn.style.display = 'block';
+                signoutBtn.style.display = 'none';
+            }
+        }
+
+        // Function to handle sign out
+        function signOut() {
+            localStorage.removeItem('token');
+            alert('You have been signed out.');
+            updateNav();
+            // Optionally, redirect to home or login page
+            window.location.href = 'index.html';
+        }
+
+        // Add event listener for DOMContentLoaded to ensure elements are loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNav();
+
+            const signoutBtn = document.getElementById('signoutBtn');
+            if (signoutBtn) {
+                signoutBtn.addEventListener('click', signOut);
+            }
+        });
     </script>
 </head>
 <body>
@@ -57,10 +62,9 @@
             <!-- Logo -->
             <div class="logo">
                 <a href="index.html">
-                <img src="pic/logo.jpg" alt="Library Logo" class="logo-img">
+                    <img src="pic/logo.jpg" alt="Library Logo" class="logo-img">
                 </a>
                 <span class="logo-text">Chulaengineering Library</span>
-                
             </div>
             <!-- Hamburger Menu (Mobile) -->
             <div class="hamburger" onclick="toggleMenu()">
@@ -71,9 +75,10 @@
             <!-- Navigation -->
             <nav class="nav-links">
                 <a href="index.html" class="nav-item">Home</a>
-                <a href="login.html" class="nav-item">Log In</a>
-                <a href="createAcc.html" class="nav-item">Sign Up</a>
+                <a href="login.html" class="nav-item" id="loginBtn">Log In</a>
+                <a href="createAcc.html" class="nav-item" id="signupBtn">Sign Up</a>
                 <a href="reservation.html" class="nav-item">Reservation</a>
+                <a href="#" class="nav-item" id="signoutBtn" style="display: none;">Sign Out</a>
             </nav>
         </div>
     </header>
@@ -83,6 +88,7 @@
         <div class="intro">
             <h1>Welcome to ChulaEngineering Library</h1>
             <p>Explore a world of knowledge, engineering resources, and academic inspiration.</p>
+            <a href="reservation.html" class="btn">Make a Reservation</a>
         </div>
     </main>
 </body>

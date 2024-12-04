@@ -1,20 +1,79 @@
 /* General Styles */
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  line-height: 1.6;
-  background-color: #f8f9fa;
-  color: #333;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('./pic/librarybackground.jpg') no-repeat center center/cover;
+  color: #fff; /* Adjust text color for contrast */
 }
 
-/* Navbar */
-.navbar {
-  background-color: #fcf7f7;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
+.main-content {
+  display: flex;
+  justify-content: center; /* Horizontally centers the content */
+  align-items: center; /* Vertically centers the content */
+  height: 100vh;
+  width: 100%;
+  position: absolute;
   top: 0;
-  z-index: 10;
+  left: 0;
+  background: rgba(0, 0, 0, 0.1); /* Add a translucent overlay */
+  border-radius: 10px;
+}
+
+.intro {
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(0, 0, 0, 0.7); /* Darker background for better readability */
+  border-radius: 10px;
+  max-width: 800px;
+  width: 100%; /* Adjusts the width of the content */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  animation: fadeInUp 1.5s ease-in-out;
+}
+
+.intro h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #f0a500;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  animation: slideIn 1s ease-in-out;
+}
+
+.intro p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #ddd;
+  margin-bottom: 30px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #f0a500;
+  color: #000;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #cf8500;
+  transform: translateY(-3px);
+}
+
+/* Navigation Styles */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .container {
@@ -37,12 +96,14 @@ body {
   width: 50px;
   height: 50px;
   margin-right: 0.5rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .logo-text {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: #fff;
 }
 
 /* Navigation Links */
@@ -51,57 +112,83 @@ body {
   gap: 1rem;
 }
 
-.nav-item {
+.nav-links a {
   text-decoration: none;
-  color: #333;
+  color: #fff;
   font-size: 1rem;
   padding: 0.5rem 1rem;
   transition: all 0.3s ease;
+  border-radius: 5px;
 }
 
-.nav-item:hover {
+.nav-links a:hover {
   background-color: #882828;
   color: #fff;
-  border-radius: 5px;
   transform: translateY(-2px);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Main Content */
-.main-content {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: linear-gradient(90deg, #ff4000 0%, #882828 100%);
-  color: #fff;
-  height: calc(100vh - 64px);
-  display: flex;
+/* Hamburger Menu (Mobile) */
+.hamburger {
+  display: none;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation: fadeInUp 1.5s ease-in-out;
+  gap: 5px;
+  cursor: pointer;
 }
 
-.intro h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  animation: slideIn 1s ease-in-out;
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
 }
 
-.intro p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-  animation: fadeIn 2s ease-in-out;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.9);
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: 200px;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .nav-links.active {
+      display: flex;
+  }
+
+  .hamburger {
+      display: flex;
+  }
+
+  .nav-links a {
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+  }
+
+  .intro h1 {
+      font-size: 2.5rem;
+  }
+
+  .intro p {
+      font-size: 1rem;
+  }
+
+  .btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+  }
 }
 
-/* Keyframes for Animations */
+/* Animations */
 @keyframes fadeIn {
-  from {
-      opacity: 0;
-  }
-  to {
-      opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeInUp {
@@ -123,60 +210,5 @@ body {
   to {
       opacity: 1;
       transform: translateX(0);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .nav-links {
-      flex-direction: column;
-      position: absolute;
-      top: 64px;
-      right: 0;
-      background: #fff;
-      width: 200px;
-      padding: 1rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: none;
-  }
-
-  .nav-links.active {
-      display: flex;
-  }
-
-  .container {
-      justify-content: space-between;
-  }
-
-  .main-content {
-      padding: 1rem;
-  }
-
-  .intro h1 {
-      font-size: 2rem;
-  }
-
-  .intro p {
-      font-size: 1rem;
-  }
-}
-
-/* Mobile Hamburger Menu */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger div {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-      display: flex;
   }
 }

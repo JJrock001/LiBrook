@@ -58,6 +58,58 @@
       background-color: #1e6d9c;
     }
 
+    /* Loading Spinner Styles */
+    .loading-spinner {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #555555; /* Dark grey */
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1002;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Toast Styles */
+    .toast {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1001;
+      left: 50%;
+      bottom: 30px;
+      font-size: 17px;
+    }
+
+    .toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
+
     /* Profile Section */
     .profile-section {
       padding: 20px;
@@ -125,11 +177,17 @@
   </style>
 </head>
 <body>
+  <!-- Loading Spinner -->
+  <div id="loading" class="loading-spinner" style="display: none;"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
   <div class="navbar">
     <div class="logo">LiBrook</div>
     <div>
       <a href="reservation.html" class="back-btn">Back</a>
-      <button class="logout-btn">Logout</button>
+      <button class="logout-btn" id="signoutBtn">Logout</button>
     </div>
   </div>
 
@@ -149,8 +207,8 @@
           <tr>
             <th>#</th>
             <th>Reservation Date</th>
-            <th>Location</th>
-            <th>Status</th>
+            <th>Reservation Time</th>
+            <th>Room</th>
           </tr>
         </thead>
         <tbody>
@@ -160,73 +218,6 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-  const userId = sessionStorage.getItem("userId"); // You can still use sessionStorage to store userId after login
-
-  if (userId) {
-    // Fetch user data from the backend
-    await getUserData(userId);
-    // Fetch and display reservation history
-    await getReservationHistory(userId);
-  } else {
-    alert("User not authenticated!");
-    window.location.href = "login.html";  // Redirect to login page if no userId found
-  }
-});
-
-async function getUserData(userId) {
-  try {
-    const response = await fetch(`http://54.85.236.167:3222/api/users/${userId}`);
-    if (response.ok) {
-      const user = await response.json();
-
-      // Update the profile section with the fetched data
-      document.getElementById("userName").textContent = user.name || "John Doe";
-      document.getElementById("userEmail").textContent = user.email || "john.doe@example.com";
-      document.getElementById("userPhone").textContent = user.phone || "+123-456-7890";
-      document.getElementById("userMemberSince").textContent = new Date(user.memberSince).toLocaleDateString() || "January 2022";
-      document.getElementById("profile-img").src = user.profileImage || "pic/male.avif"; // Default profile image if not found
-    } else {
-      alert("Failed to fetch user data.");
-    }
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    alert("An error occurred while fetching user data.");
-  }
-}
-
-async function getReservationHistory(userId) {
-  try {
-    const response = await fetch(`http://54.85.236.167:3222/api/users/${userId}/reservations`);
-    if (response.ok) {
-      const reservations = await response.json();
-      const reservationTableBody = document.getElementById("reservationTable").getElementsByTagName('tbody')[0];
-
-      reservations.forEach((reservation, index) => {
-        const row = reservationTableBody.insertRow();
-        row.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${new Date(reservation.reservationDate).toLocaleDateString()}</td>
-          <td>${reservation.location}</td>
-          <td>${reservation.status}</td>
-        `;
-      });
-    } else {
-      alert("Failed to fetch reservation history.");
-    }
-  } catch (error) {
-    console.error("Error fetching reservation history:", error);
-    alert("An error occurred while fetching reservation history.");
-  }
-}
-
-// Logout functionality
-document.querySelector(".logout-btn").addEventListener("click", () => {
-  sessionStorage.clear(); // Clear session data
-  alert("You have been logged out!");
-  window.location.href = "login.html"; // Redirect to login page
-});
-  </script>
+  <script src="scripts/profile.js"></script>
 </body>
 </html>
